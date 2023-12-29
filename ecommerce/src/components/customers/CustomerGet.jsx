@@ -2,8 +2,11 @@ import React from 'react'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import CustomerRender from './CustomerRender'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerGet = () => {
+
+    const navigate = useNavigate()
 
     const [customer_data, setCustomerData] = useState([])
 
@@ -12,6 +15,8 @@ const CustomerGet = () => {
         .then(response => setCustomerData(response.data))
         .catch(error => console.log(error))
     }, [])
+
+    let customer_render = customer_data.length > 0 ? customer_data.map(customer => <CustomerRender key={customer.id} customer={customer}/>): <div>No Data Found</div>
 
     return (
         <div>
@@ -25,9 +30,10 @@ const CustomerGet = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {customer_data.length > 0 ? customer_data.map(customer => <CustomerRender key={customer.id} customer={customer}/>): <div>No Data Found</div>}
+                    {customer_render}
                 </tbody>
             </table>
+            <button onClick={() => navigate('/add')}>Go to add page</button>
         </div>
     )
 }

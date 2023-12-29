@@ -1,8 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const CustomerPost = () => {
+
+    const navigate = useNavigate()
 
     const [customer_name, setCustomerName] = useState('')
     const [username, setUsername] = useState('')
@@ -19,11 +22,7 @@ const CustomerPost = () => {
         }
 
         axios.post('http://127.0.0.1:8000/test/post/', customer_data)
-        .then(response => {
-            setUsername('')
-            setCustomerName('')
-            setAge('')
-        })
+        .then(response => navigate('/'))
         .catch(error => console.log(error))
 
     }
